@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -133,9 +133,25 @@
             
             <!-- Controls -->
             <div class="flex flex-wrap justify-center items-center gap-3 w-full sm:w-auto">
-                <button id="theme-toggle" type="button" class="control-shell inline-flex items-center gap-2 px-4 py-2.5 text-slate-700 text-sm font-semibold transition-all hover:-translate-y-0.5 dark:text-slate-100" aria-label="Toggle theme">
+                <button id="mobile-menu-open" type="button" class="control-shell sm:hidden inline-flex items-center gap-2 px-4 py-2.5 text-slate-700 text-sm font-semibold transition-all hover:-translate-y-0.5 dark:text-slate-100" aria-label="Open menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                    <span>Menu</span>
+                </button>
+
+                <button id="theme-toggle" type="button" class="control-shell hidden sm:inline-flex items-center gap-2 px-4 py-2.5 text-slate-700 text-sm font-semibold transition-all hover:-translate-y-0.5 dark:text-slate-100" aria-label="Toggle theme">
                     <span id="theme-label">Dark</span>
                 </button>
+
+                <div class="control-shell relative flex items-center transition-all hover:-translate-y-0.5 w-full sm:w-auto">
+                    <div class="pl-3 pr-2 py-2.5 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M16 10.5A5.5 5.5 0 115 10.5a5.5 5.5 0 0111 0z" />
+                        </svg>
+                    </div>
+                    <input id="plan-search" type="search" placeholder="Search plans, duration..." oninput="renderContent()" class="bg-transparent text-slate-700 dark:text-slate-100 text-sm font-medium focus:ring-0 focus:outline-none block py-2.5 pr-3 pl-1 w-full sm:w-56">
+                </div>
 
                 <div class="control-shell relative flex items-center transition-all hover:-translate-y-0.5">
                     <div class="pl-3 pr-2 py-2.5 border-r border-slate-100 dark:border-slate-700 flex items-center">
@@ -151,7 +167,7 @@
                     </svg>
                 </div>
 
-                <div class="control-shell relative flex items-center transition-all hover:-translate-y-0.5">
+                <div class="control-shell relative hidden sm:flex items-center transition-all hover:-translate-y-0.5">
                     <div class="pl-3 pr-2 py-2.5 border-r border-slate-100 dark:border-slate-700 flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" /></svg>
                     </div>
@@ -168,6 +184,55 @@
         </div>
     </header>
 
+    <!-- Mobile Drawer -->
+    <div id="mobile-drawer" class="fixed inset-0 z-[60] hidden sm:hidden">
+        <div id="mobile-drawer-overlay" class="absolute inset-0 bg-slate-900/50"></div>
+        <aside class="absolute right-0 top-0 h-full w-80 max-w-[90vw] bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-700 shadow-2xl p-5">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-lg font-bold text-slate-800 dark:text-slate-100">Quick Settings</h3>
+                <button id="mobile-menu-close" type="button" class="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="space-y-4">
+                <button id="theme-toggle-mobile" type="button" class="control-shell w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 text-slate-700 text-sm font-semibold dark:text-slate-100">
+                    <span id="theme-label-mobile">Dark</span>
+                </button>
+
+                <div class="control-shell relative flex items-center">
+                    <div class="pl-3 pr-2 py-2.5 border-r border-slate-100 dark:border-slate-700 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" /></svg>
+                    </div>
+                    <select id="language-mobile" class="ui-select bg-transparent text-slate-700 dark:text-slate-100 text-sm font-semibold focus:ring-0 focus:outline-none block py-2.5 pr-9 pl-3 cursor-pointer w-full">
+                        <option value="mr">Mara</option>
+                        <option value="en">English</option>
+                        <option value="my">မြန်မာ</option>
+                    </select>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="pointer-events-none absolute right-3 h-4 w-4 text-slate-400 dark:text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </div>
+
+                <div class="control-shell relative flex items-center">
+                    <div class="pl-3 pr-2 py-2.5 border-r border-slate-100 dark:border-slate-700 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" /></svg>
+                    </div>
+                    <select id="plan-filter-mobile" class="ui-select bg-transparent text-slate-700 dark:text-slate-100 text-sm font-semibold focus:ring-0 focus:outline-none block py-2.5 pr-9 pl-3 cursor-pointer w-full">
+                        <option value="all" id="opt-all-mobile">All Plans</option>
+                        <option value="basic" id="opt-basic-mobile">Basic</option>
+                        <option value="premium" id="opt-premium-mobile">Premium</option>
+                    </select>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="pointer-events-none absolute right-3 h-4 w-4 text-slate-400 dark:text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </div>
+            </div>
+        </aside>
+    </div>
+
     <!-- Main Content -->
     <main class="flex-grow max-w-7xl mx-auto w-full px-4 py-8 sm:px-6 lg:px-8 overflow-hidden">
         
@@ -182,17 +247,12 @@
             <div class="bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-slate-950/30 border border-slate-100 dark:border-slate-700 overflow-hidden relative">
                 
                 <!-- Decorative background elements -->
-                <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-brand-50 to-purple-50 rounded-full blur-3xl opacity-50 -z-10 translate-x-1/2 -translate-y-1/2"></div>
-                
-                <div class="overflow-x-auto table-container z-10 relative">
-                    <table class="w-full text-left border-collapse">
-                        <thead id="table-head" class="text-xs text-slate-500 dark:text-slate-300 uppercase bg-slate-50/80 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700">
-                            <!-- Dynamic Headers inserted here -->
-                        </thead>
-                        <tbody id="table-body" class="divide-y divide-slate-100 dark:divide-slate-700">
-                            <!-- Dynamic Rows inserted here -->
-                        </tbody>
-                    </table>
+                <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#cdeedc] to-[#9fd9bc] dark:from-[#007f3f]/25 dark:to-[#00994d]/20 rounded-full blur-3xl opacity-60 -z-10 translate-x-1/2 -translate-y-1/2"></div>
+
+                <div class="p-5 sm:p-6 z-10 relative">
+                    <div id="plan-cards" class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+                        <!-- Dynamic plan cards inserted here -->
+                    </div>
                 </div>
                 
                 <!-- Empty State -->
@@ -293,14 +353,14 @@
                 ],
                 "rulesTitle": "Wi-Fi Hmâna Ryhpazy",
                 "rules": [
-                    {"h": "Voucher Â Byuh", "p": "Wi-Fi hmâh awpa ta Voucher code a dopa hmâ awpa â byuh."},
+                    {"h": "Voucher Byuh", "p": "Wi-Fi hmâh awpa ta Voucher code a dopa hmâ awpa a byuh."},
                     {"h": "Device Thliena", "p": "Basic Plan: Voucher sâ 1 he device 1 deita hmâ theipa a châ.<br>Premium Plan: Device 12 taih hmâ theipa a châ."},
                     {"h": "Daihti Reina", "p": "<strong>One Time Plan:</strong> Login na tao nata daihti reih pathao hapa châ ta, a reih pazao ngâ thlâh ha aw.<br><strong>Resume Plan:</strong> Pazao chhôh deita daihti a reih aw."},
-                    {"h": "Anotata Daihti Chhâna", "p": "Na chaleipa daihti a pha tita, internet nâ pazaopa cha â chalih ha aw."},
-                    {"h": "Â Dopa Ta Hmâhna", "p": "A hropa hmâhtuhpazy châta internet pasôsa theipa hmo tao leipa ta hmâh awpa a châ."},
+                    {"h": "Anotata Daihti Chhâna", "p": "Na chaleipa daihti a pha tita, internet nâ pazaopa cha a chalih ha aw."},
+                    {"h": "Dopa Ta Hmâhna", "p": "A hropa hmâhtuhpazy châta internet pasôsa theipa hmo tao leipa ta hmâh awpa a châ."},
                     {"h": "Hmo Pha Leipa Taona Pakhâkhâhpa A Châ", "p": "Hacking, ado leipa ta download taopa, dôpa nata hmo pha leipa taopazy châta internet hmâ awpa châ vei."},
-                    {"h": "Hmâhtuhpazy Device Maohphaona", "p": "Hmâhtuhpazy ta ama hmâpa device thlalõhna nata abohna cha âmo ku lia deita â pahnieh."},
-                    {"h": "Chakaona Ahmo Theina", "p": "Internet chatliena he, network hmâhtuhpa ama hluh zie, paraihna zy vâta â nano thei aw."},
+                    {"h": "Hmâhtuhpazy Device Maohphaona", "p": "Hmâhtuhpazy ta ama hmâpa device thlalõhna nata abohna cha âmo ku lia deita a pahnieh."},
+                    {"h": "Chakaona Ahmo Theina", "p": "Internet chatliena he, network hmâhtuhpa ama hluh zie, paraihna zy vâta a nano thei aw."},
                     {"h": "Apazao Lei Theina", "p": "Wi-Fi mohõhtuhpa cha hmâ dâh ado leipa hmâhtuhpazy he Wi-Fi hmâna tawh a pabâsa thei ei."}
                 ],
                 "footer": "IT & Communication Team | TSD"
@@ -359,9 +419,11 @@
         }
 
         function updateThemeLabel() {
-            const label = document.getElementById('theme-label');
-            if (!label) return;
-            label.textContent = getTheme() === 'dark' ? 'Dark' : 'Light';
+            const themeText = getTheme() === 'dark' ? 'Dark' : 'Light';
+            ['theme-label', 'theme-label-mobile'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = themeText;
+            });
         }
 
         function setTheme(theme) {
@@ -375,62 +437,80 @@
             setTheme(getTheme() === 'dark' ? 'light' : 'dark');
         }
 
+        function syncMobileControls() {
+            const lang = document.getElementById('language')?.value;
+            const filter = document.getElementById('plan-filter')?.value;
+            const mobileLang = document.getElementById('language-mobile');
+            const mobileFilter = document.getElementById('plan-filter-mobile');
+            if (mobileLang && lang) mobileLang.value = lang;
+            if (mobileFilter && filter) mobileFilter.value = filter;
+        }
+
         function renderContent() {
             const lang = document.getElementById('language').value;
             const filter = document.getElementById('plan-filter').value;
+            const searchTerm = (document.getElementById('plan-search')?.value || '').trim().toLowerCase();
             const content = siteData[lang];
 
             if (!content) return;
 
-            // UI strings update
             document.getElementById('opt-all').textContent = content.ui.all;
             document.getElementById('opt-basic').textContent = content.ui.basic;
             document.getElementById('opt-premium').textContent = content.ui.premium;
+            document.getElementById('opt-all-mobile').textContent = content.ui.all;
+            document.getElementById('opt-basic-mobile').textContent = content.ui.basic;
+            document.getElementById('opt-premium-mobile').textContent = content.ui.premium;
             document.getElementById('hero-subtitle').textContent = content.ui.subtitle;
             document.getElementById('hero-desc').textContent = content.ui.desc;
-
-            // Header & Title
             document.getElementById('page-title').textContent = content.title;
             document.title = content.title;
 
-            // Table Headers
-            const thead = document.getElementById('table-head');
-            thead.innerHTML = '<tr>' + content.headers.map((h, i) => 
-                `<th scope="col" class="px-6 py-4 font-semibold text-slate-600 dark:text-slate-200 tracking-wider whitespace-nowrap">${h}</th>`
-            ).join('') + '</tr>';
-
-            // Filter logic
-            const tbody = document.getElementById('table-body');
+            const cardsContainer = document.getElementById('plan-cards');
             const emptyState = document.getElementById('empty-state');
             
             const filteredPlans = content.plans.filter(row => {
                 const planName = row[0];
-                if (filter === 'all') return true;
-                if (filter === 'basic') return planName === 'Basic' || planName === 'အခြေခံ';
-                if (filter === 'premium') return planName === 'Premium' || planName === 'ပရီမီယံ';
-                return true;
+                const searchable = row.join(' ').toLowerCase();
+                const matchesSearch = !searchTerm || searchable.includes(searchTerm);
+                if (filter === 'all') return matchesSearch;
+                if (filter === 'basic') return (planName === 'Basic' || planName === 'အခြေခံ') && matchesSearch;
+                if (filter === 'premium') return (planName === 'Premium' || planName === 'ပရီမီယံ') && matchesSearch;
+                return matchesSearch;
             });
 
-            // Render Rows
             if (filteredPlans.length > 0) {
                 emptyState.classList.add('hidden');
-                tbody.innerHTML = filteredPlans.map(row => {
+                cardsContainer.innerHTML = filteredPlans.map(row => {
                     const planBadge = getPlanBadge(row[0]);
-                    return `<tr class="hover:bg-brand-50/50 dark:hover:bg-slate-800 transition-colors group">
-                        <td class="px-6 py-4 whitespace-nowrap">${planBadge}</td>
-                        <td class="px-6 py-4 whitespace-nowrap font-medium text-slate-800 dark:text-slate-100">${row[1]}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-slate-600 dark:text-slate-300 text-sm">${row[2]}</td>
-                        <td class="px-6 py-4 whitespace-nowrap font-bold text-brand-600">${row[3]}</td>
-                        <td class="px-6 py-4 whitespace-nowrap font-bold ${row[4] === '-' ? 'text-slate-300 dark:text-slate-500' : 'text-indigo-600 dark:text-indigo-300'}">${row[4]}</td>
-                    </tr>`;
+                    const resumeValue = row[4] === '-' ? 'N/A' : row[4];
+                    return `
+                        <div class="rounded-2xl overflow-hidden border border-slate-200/70 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm hover:shadow-xl transition-all hover:-translate-y-0.5">
+                            <div class="px-4 py-3 bg-gradient-to-r from-[#007f3f] to-[#00994d] text-white flex items-center justify-between">
+                                <span class="text-xs font-semibold uppercase tracking-wider">Recharge Offer</span>
+                                <span class="text-xs font-medium opacity-90">${row[1]}</span>
+                            </div>
+                            <div class="p-5">
+                                <div class="flex items-center justify-between gap-3 mb-4">
+                                    ${planBadge}
+                                    <div class="text-right">
+                                        <p class="text-xs text-slate-500 dark:text-slate-400">One Time</p>
+                                        <p class="text-2xl font-extrabold text-[#007f3f] dark:text-[#35c27b]">${row[3]}</p>
+                                    </div>
+                                </div>
+                                <p class="text-sm text-slate-600 dark:text-slate-300 mb-4 min-h-[40px]">${row[2]}</p>
+                                <div class="pt-3 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between">
+                                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Resume</span>
+                                    <span class="text-sm font-bold ${row[4] === '-' ? 'text-slate-400 dark:text-slate-500' : 'text-indigo-600 dark:text-indigo-300'}">${resumeValue}</span>
+                                </div>
+                            </div>
+                        </div>`;
                 }).join('');
             } else {
-                tbody.innerHTML = '';
+                cardsContainer.innerHTML = '';
                 emptyState.classList.remove('hidden');
                 emptyState.classList.add('flex');
             }
 
-            // Render Rules
             document.getElementById('rules-title').textContent = content.rulesTitle;
             const rulesContainer = document.getElementById('rules-container');
             rulesContainer.innerHTML = content.rules.map((rule, index) => `
@@ -443,16 +523,51 @@
                 </div>
             `).join('');
 
-            // Footer
             document.getElementById('footer-text').textContent = content.footer;
+            syncMobileControls();
         }
 
-        // Initialize app and theme (default: dark)
+        function openMobileDrawer() {
+            const drawer = document.getElementById('mobile-drawer');
+            if (!drawer) return;
+            syncMobileControls();
+            drawer.classList.remove('hidden');
+        }
+
+        function closeMobileDrawer() {
+            const drawer = document.getElementById('mobile-drawer');
+            if (!drawer) return;
+            drawer.classList.add('hidden');
+        }
+
         window.onload = () => {
             const themeToggle = document.getElementById('theme-toggle');
-            if (themeToggle) {
-                themeToggle.addEventListener('click', toggleTheme);
+            const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+            if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+            if (themeToggleMobile) themeToggleMobile.addEventListener('click', toggleTheme);
+
+            const mobileOpen = document.getElementById('mobile-menu-open');
+            const mobileClose = document.getElementById('mobile-menu-close');
+            const mobileOverlay = document.getElementById('mobile-drawer-overlay');
+            if (mobileOpen) mobileOpen.addEventListener('click', openMobileDrawer);
+            if (mobileClose) mobileClose.addEventListener('click', closeMobileDrawer);
+            if (mobileOverlay) mobileOverlay.addEventListener('click', closeMobileDrawer);
+
+            const mobileLanguage = document.getElementById('language-mobile');
+            const mobileFilter = document.getElementById('plan-filter-mobile');
+            if (mobileLanguage) {
+                mobileLanguage.addEventListener('change', () => {
+                    document.getElementById('language').value = mobileLanguage.value;
+                    renderContent();
+                });
             }
+            if (mobileFilter) {
+                mobileFilter.addEventListener('change', () => {
+                    document.getElementById('plan-filter').value = mobileFilter.value;
+                    renderContent();
+                });
+            }
+
             const savedTheme = localStorage.getItem('theme');
             setTheme((savedTheme === 'light' || savedTheme === 'dark') ? savedTheme : 'dark');
             renderContent();
@@ -460,3 +575,5 @@
     </script>
 </body>
 </html>
+
+
